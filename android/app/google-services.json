@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "76769203593",
+    "project_id": "mapper-c0c6a",
+    "storage_bucket": "mapper-c0c6a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:76769203593:android:6eb78a8d11e9d9040cfd58",
+        "android_client_info": {
+          "package_name": "ru.fbtw.parent_mapper_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "76769203593-hnhhr8f9bb5cg428guemv9ue7slii0r9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqURf08j5xwytZ36B1q_1kPG-tmUbdLMg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "76769203593-hnhhr8f9bb5cg428guemv9ue7slii0r9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
