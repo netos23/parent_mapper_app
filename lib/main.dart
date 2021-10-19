@@ -8,7 +8,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,7 +23,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
-
   final String title;
 
   @override
@@ -32,13 +30,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-
-
-  List<Widget> _pages = <StatefulWidget>[
-      BuildingsPage(),
-      SearchPage()
-  ];
+  List<Widget> _page;
 
   int _selectedIndex = 0;
   Widget _currentWidget;
@@ -47,14 +39,26 @@ class _MyHomePageState extends State<MyHomePage> {
 
   bool _error = false;
 
+  String _projectName;
+
+
   void initializeFlutterFire() async {
     try {
       // Wait for Firebase to initialize and set `_initialized` state to true
       await Firebase.initializeApp();
+      var tmp = await DefaultAssetBundle.of(context)
+          .loadString('res/creditlines.data');
       setState(() {
         _initialized = true;
+        _projectName = tmp;
+        _page = <StatefulWidget>[
+          BuildingsPage(_projectName),
+          SearchPage(_projectName)
+        ];
+
+        _currentWidget = _page[_selectedIndex];
       });
-    } catch(e) {
+    } catch (e) {
       // Set `_error` state to true if Firebase initialization fails
       setState(() {
         _error = true;
@@ -62,17 +66,15 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-
   @override
   void initState() {
     super.initState();
-    _currentWidget = _pages[_selectedIndex];
     initializeFlutterFire();
   }
 
   @override
   Widget build(BuildContext context) {
-    if(_error) {
+    if (_error) {
       return Text('errrrrrror!!!!! restart me~!');
     }
 
@@ -85,23 +87,18 @@ class _MyHomePageState extends State<MyHomePage> {
       body: _currentWidget,
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.deepPurple,
-        items: const<BottomNavigationBarItem>[
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
               backgroundColor: Colors.purple,
               label: "Buildings",
               icon: Icon(
                 Icons.map,
-              )
-          ),
-
+              )),
           BottomNavigationBarItem(
               backgroundColor: Colors.purple,
               icon: Icon(Icons.search),
-              label: 'Search'
-          ),
-
+              label: 'Search'),
         ],
-
         selectedItemColor: Colors.white,
         currentIndex: _selectedIndex,
         onTap: _onTouch,
@@ -112,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _onTouch(int value) {
     setState(() {
       _selectedIndex = value;
-      _currentWidget = _pages[_selectedIndex];
+      _currentWidget = _page[_selectedIndex];
     });
   }
 }

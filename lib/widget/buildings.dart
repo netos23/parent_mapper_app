@@ -5,6 +5,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class BuildingsPage extends StatefulWidget {
+  var _projectName;
+
+  BuildingsPage(this._projectName);
+
   @override
   _BuildingsPageState createState() => _BuildingsPageState();
 }
@@ -16,12 +20,13 @@ class _BuildingsPageState extends State<BuildingsPage> {
   List<Widget> _buildings = [];
   int _currentIndex = 0;
 
-  bool _initialized = false;
+
+
 
   @override
   void initState() {
     super.initState();
-    _loadProjectName();
+    _projectName = widget._projectName;
   }
 
   Widget _loading() {
@@ -30,9 +35,7 @@ class _BuildingsPageState extends State<BuildingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (!_initialized) {
-      return _loading();
-    }
+
     return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection(_projectName)
@@ -69,11 +72,7 @@ class _BuildingsPageState extends State<BuildingsPage> {
     _buildings = docs.map((data) => LevelWidget.fromSnapshot(data)).toList();
   }
 
-  void _loadProjectName() async {
-    this._projectName =
-        await DefaultAssetBundle.of(context).loadString('res/creditlines.data');
-    _initialized = true;
-  }
+
 
   void _selectLevel(int index) {
     setState(() {
